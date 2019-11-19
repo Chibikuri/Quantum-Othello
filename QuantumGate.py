@@ -9,6 +9,7 @@ from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, execute, 
 from qiskit.compiler import transpile
 import numpy as np
 import collections
+import random
 
 '''
     Define class 
@@ -16,8 +17,45 @@ import collections
 
 class QuantumOthello():
     
-    def __init__(self, num):
+    def __init__(self, num, turn):
+        self.num = num
+        self.turn = turn
         self.qc = QuantumCircuit(num)
+        
+    def StartTheGame(self):
+        for i in range(self.num):
+            if i % 2 == 0:
+                x = str(input('A, instruction >'))
+                y = int(input('A #qubit >'))
+                self.initial(x, y)
+            else:
+                x = str(input('B, instruction >'))
+                y = int(input('B #qubit >'))
+                self.initial(x, y)
+        self.end_initial()
+        #q.get_cir()
+        print('End of initialization')
+        for i in range(self.turn):
+            if i % 2 == 0:
+                x = str(input('A, instruction >'))
+                if x == 'CX':
+                    y1 = int(input('Control qubit #> '))
+                    y2 = int(input('target qubit #> '))
+                    self.operation(x, [y1, y2])
+                else:
+                    y = int(input('A #qubit >'))
+                    self.operation(x, y)
+            else:
+                x = str(input('B, instruction >'))
+                if x == 'CX':
+                    y1 = int(input('Control qubit #> '))
+                    y2 = int(input('target qubit #> '))
+                    self.operation(x, [y1, y2])
+                else:
+                    y = int(input('B #qubit >'))
+                    self.operation(x, y)
+        result = self.RuntheGaame()
+        print(result)
         
     def get_cir(self, trans=False):
         style = { 'showindex': True, 
@@ -62,26 +100,56 @@ class QuantumOthello():
             self.qc.h(num)
         if oper == 'CX':
             self.qc.cx(num_control, num_target)
+        if oper == 'X':
+            self.qc.x(num)
     
     def RuntheGaame(self):
         self.qc.measure_all()
-        backend = Aer.get_backend('qasm_simulator')
+        self.get_cir()
+        backend = Aer.get_backend('qasm_simulator') #qasm_simulator
         job = execute(self.qc, backend=backend, shots = 8192).result().get_counts()
         List = {'0': 0, '1': 0}
         for i in job:
-            t, _ = collections.Counter(i).most_common(1)[0]
-            List[t] += job[i]
+            if len(collections.Counter(i).most_common()) == 2:
+                t, t_c = collections.Counter(i).most_common(2)[0]
+                d, d_c = collections.Counter(i).most_common(2)[1]
+                if t_c > d_c:
+                    List[t] += job[i]
+                elif t_c < d_c:
+                    List[d] += job[i]
+                else:
+                    None
+            else:
+                t, _ = collections.Counter(i).most_common(1)[0]
+                List[t] += job[i]
         return List
     
-q = QuantumOthello(4)
-q.initial('0', 2)
-q.initial('0', 3)
-q.initial('1', 0)
-q.initial('1', 1)
-q.end_initial()
-q.operation('H', 0)
-q.operation('CX', [1, 3])
-q.operation('H', 2)
-q.operation('H', 3)
-q.get_cir(trans=False)
-result = q.RuntheGaame()
+    def RandomGate(self):
+        Gate = ['H', 'CX', 'X']
+        return random.choices(Gate, k=5)
+    
+q = QuantumOthello(9, 5)
+choice = q.RandomGate()
+print(choice)
+choice = q.RandomGate()
+print(choice)
+#q.StartTheGame()
+#q.initial('0', 0)
+#q.initial('1', 1)
+#q.initial('0', 2)
+#q.initial('0', 3)
+#q.initial('1', 4)
+#q.initial('0', 5)
+#q.initial('1', 6)
+#q.initial('0', 7)
+#q.initial('1', 8)
+#q.end_initial()
+#
+#q.operation('H', 7)
+#q.operation('CX', [4, 1])
+#q.operation('CX', [7, 8])
+#q.operation('X', 6)
+
+#q.get_cir(trans=False)
+#result = q.RuntheGaame()
+#print(result)
