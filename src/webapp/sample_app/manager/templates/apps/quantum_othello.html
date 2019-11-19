@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Othello</title>
+  <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'apps/style.css' %}" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.0/fabric.min.js"></script>
+</head>
+<body id="about">
+
+<!--header始まり-->
+  <header>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- ロゴの画像の表示、Homeへのリンク化-->
+  <!--クラス：ロゴ-->
+          <h1><font color=#ffffff>Ryoko</font></h1>
+      </div>
+  </header>
+  <!--header終わり-->
+
+<!--wrap始まり-->
+<div id="wrap">
+  <!--クラス：コンテンツ-->
+  <div class="content">
+    <div class="main-center">
+      <div align="center">
+      </div>
+    <section class="about clearfix">
+    <h2 class="icon">Quantum Othello</h2>
+        <p>Starting with NxN board, as usual, two players (or teams) can put their disc on the board in either superposition form or one of the state, white or black. Moreover, instead of just put in the dice, you can do quantum operation too! e.g. Hadamard, X, CX, or funny custom quantum gate to deal with the amplitude of the state! After 20 turns or so, the circuit created by players will then send to execute to get the result of the game!</p></CENTER>
+     <style>
+        body {
+           background: #eee;
+        }
+
+        #canvas {
+           margin: 10px;
+           background: #ffffff;
+           border: 1px solid #aaaaaa;
+        }
+
+        input[type="image"]{
+        	padding: 2px;
+        	outline: none;
+        }
+
+        input[type="image"].active{
+        	background-color: #fff;
+        }
+
+     </style>
+
+<body>
+
+		<!-- <img src="{% static 'apps/images/0-9.png' %}" alt="0123456789" width="200px"></a> -->
+    <p>Choose how many qubits do you want to use?</p>
+    <!-- <canvas id="canvas" width="280" height="280"></canvas><br>
+    <form name="name_form" action="ajax" method="POST" enctype="multipart/form-data">
+        {% csrf_token%}
+    
+    <button type="submit" id="submit" class="btn">post!</button> -->
+    <!-- <input type="text" id="id_input_text" name="name_input_text" value="999.99"> -->
+    </form>
+    <!-- <input type="image" id="delete_canvas" src="{% static 'apps/images/redo.png'%}" width="35px" onClick="delete_canvas()"> -->
+    <!-- <input type="image" id="pencil" src="{% static 'apps/images/pen.png' %}" width="35px" class="active" onClick="tool(1)"> -->
+    <form, id='qubit-form'>
+    <select name="qubits">
+      <option value="4">4</option>
+      <option value="9">9</option>
+      <option value="16">16</option>
+    </select>
+    </form>
+     <input type="button" value="select" onclick="clickBtn()"/>
+     <!-- <form name="name_form" action="ajax" method="POST" enctype="multipart/form-data">
+      {% csrf_token%}
+    <button type="submit" id="submit" class="btn">post!</button> -->
+    
+    <!-- <iframe src="{}" id="id_ifrem"></iframe> -->
+    <div class="ajax">
+        <span id="id_div_ajax_response">
+        </span>
+    </div>
+    
+<script type="text/javascript">
+
+  function clickBtn(){
+    var $qubit = $('#qubit-form [name=qubits]').val();
+    makeIframe($qubit)
+  };
+  function makeIframe(numstr){
+    window.open(numstr+'playboard', '_blank')
+  }
+  
+  $("form").submit( function(event) {
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+          url: form.prop("action"),
+          method: form.prop("method"),
+          data: form.serialize(),
+          timeout: 10000,
+          dataType: "text",
+        })
+        .done( function(data) {
+          alert("done");
+          $("#id_div_ajax_response").text(data);
+        })
+      });
+
+</script>
+</body>
+</html>

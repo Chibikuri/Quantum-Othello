@@ -1,0 +1,80 @@
+.dragparts,
+.dragparts_drop {
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+    position: absolute;
+}
+ 
+ 
+/* #dragitemlist
+--------------------------- */
+#dragitemlist {
+    margin-bottom: 50px;
+    width: 525px;
+    text-align: left;
+    position: relative;
+}
+ 
+#dragitemlist ul.draglist {
+    margin-left: 5px;
+    width: 100%;
+}
+ 
+#dragitemlist ul.draglist li {
+    margin: 0 5px 5px 0;
+    width: 100px;
+    height: 100px;
+    display: inline;
+    float: left;
+    position: relative;
+}
+ 
+ 
+/* #droparea
+--------------------------- */
+#droparea {
+    padding: 5px 0 0 5px;
+    min-height: 100px;
+    background: #ddd;
+}
+ 
+#droparea.areahover {
+    background: #666;
+}
+ 
+#droparea .dragparts_drop {
+    margin: 0;
+    padding: 0 5px 5px 0;
+    position: relative;
+}
+ 
+ 
+/* #actionarea
+--------------------------- */
+#actionarea {
+    padding: 10px 0;
+}
+ 
+#allselect,
+#listclear {
+    padding: 0 10px;
+}
+ 
+ 
+/* =======================================
+    ClearFixElements
+======================================= */
+#dragitemlist ul:after {
+    content: ".";
+    height: 0;
+    clear: both;
+    display: block;
+    visibility: hidden;
+}
+#dragitemlist ul {
+    display: inline-block;
+}

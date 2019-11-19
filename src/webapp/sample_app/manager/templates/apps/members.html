@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AQUA</title>
+  <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+  {% load static %}
+  <link href="{% static '/apps/style.css' %}" rel="stylesheet">
+</head>
+<body id="members">
+
+<!--header始まり-->
+  <header>
+  <!-- ロゴの画像の表示、Homeへのリンク化-->
+  <!--クラス：ロゴ-->
+      <div class="logo">
+          <h1><font color=#ffffff>量子機械学習による画像分類</font></h1>
+      </div>
+        <nav>
+        <!--クラス；グローバルナビ-->
+        <ul class="global-nav">
+            <!--メニュー内要素(ページ名)-->
+            <li><a href="home.html">Home</a></li>
+            <!--手書き文字認識-->
+            <li><a href="try_quantum.html">Try Quantum</a></li>
+            <!--技術-->
+            <li><a href="technologies.html">Technologies</a></li>
+            <!--メンバー-->
+            <li><a href="members.html">Members</a></li>
+            <!--論文やサイトのリンク-->
+            <li><a href="links.html">Links</a></li>
+          </ul>
+    </nav>
+  </header>
+  <!--header終わり-->
+
+<!--wrap始まり-->
+<div id="wrap">
+  <!--クラス：コンテンツ-->
+  <div class="content">
+    <div class="main-center">
+    <section class="about clearfix">
+    <div class="about-txt">
+    <CENTER>
+   <h2 class="icon">メンバー</h2>
+    <font  color="black">
+		<a href="mailto:parton@sfc.wide.ad.jp"><img src="{% static 'images/members/parton.png' %}" alt="parton" width="150px" height="150px" class="about-image"></a>
+		<a href="mailto:cocori@sfc.wide.ad.jp"><img src="{% static 'images/members/cocori.png' %}" alt="cocori" width="150px" height="150px" class="about-image"></a>
+		<a href="mailto:rum@sfc.wide.ad.jp"><img src="{% static 'images/members/rum.png' %}" alt="rum" width="150px" height="150px" class="about-image"></a>
+        <br>
+        <br>
+    </CENTER>
+    </font>
+      
+      
+          </font>
+    </div>
+      </section>
+      <section class="FandE">
+
+      </section>
+  </div>
+  </div>
+</div>
+<!--wrap終わり-->
+
+<!--footer始まり-->
+  <footer>
+    <small>&copy;2018 Shin Nishio, Yasuhiro Ohkura, Ryosuke Satoh
+All Rights Reserved.</small><br>
+    <small><a href="mailto:parton@sfc.wide.ad.jp">お問い合わせ</a></small>
+  </footer>
+<!--hooter終わり-->
+</body>
+</html>
