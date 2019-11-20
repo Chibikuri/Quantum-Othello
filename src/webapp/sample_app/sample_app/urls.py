@@ -14,6 +14,7 @@ urlpatterns = [
     url('technologies', manager_view.technologies, name='tech'),
     url('links', manager_view.links, name='links'),
     path("ajax", manager_view.test_ajax_app),
+    path("ajaxgate", manager_view.gate_ajax),
     url('research', manager_view.detail, name='research'),
     url('4playboard', manager_view.four_board, name='four_board'),
     url('9playboard', manager_view.nine_board, name='nine_board'),

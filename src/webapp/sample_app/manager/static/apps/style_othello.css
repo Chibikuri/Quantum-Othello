@@ -47,18 +47,16 @@ background-color:#F3C759;
  }
 }
 
-/* button{
+button.btn{
     text-align: center;
     width:100px;
-    height:100px;
-} */
-h3.{
-
+    height:50px;
+    display:none;
 }
 
-#apply{
+/* #apply{
     display: none;
-}
+} */
 select {
     width:80px;
     height:40px;

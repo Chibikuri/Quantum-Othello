@@ -57,6 +57,25 @@ def links(req):
         return render(req, 'apps/links.html')
 
 @csrf_exempt
+def gate_ajax(req):
+    """
+    {"H":0 , "H":1}
+    """
+    opt = [req.POST.get('qubit'+str(i)) for i in range(1, 5)]
+    for i, v in enumerate(opt):
+        if v is not None:
+            q.operation(v, i)
+    circuit = q.get_cir()
+    q.end_initial()
+    
+    figfile = BytesIO()
+    circuit.savefig(figfile, format='png')
+    figfile.seek(0)
+    figfile_png = figfile.getvalue()
+    base64_circuit = base64.b64encode(figfile_png)
+    return HttpResponse(base64_circuit)
+
+@csrf_exempt
 def test_ajax_app(req):
     """
     {"H":0 , "H":1}
@@ -66,6 +85,7 @@ def test_ajax_app(req):
     print(initial)
     operations = operation(initial)
     print(operations)
+    global q
     q = QuantumOthello(len(operations), 5)
     q.SeqInitial(operations)
     circuit = q.get_cir()

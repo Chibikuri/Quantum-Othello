@@ -28,18 +28,19 @@
                 <div class="img-flex-4">
                     <div id='oneq'>
                         <h2>Operations</h2>
-                        <input type='image' src="{% static 'images/Hgate.png' %}" alt="Hadamard" id="H"> 
-                        <!-- <input type='image' src="{% static 'images/Xgate.png' %}" alt="PauliX" id="X"> 
-                        <input type='image' src="{% static 'images/Zgate.png' %}" alt="PauliZ" id="Z">  -->
-                        <input type='image' src="{% static 'images/HXgate.png' %}" alt="HXgate" id="HX">
-                        <input type='image' src="{% static 'images/CXgate.png' %}" alt="CXgate" id="CX">
-                        <input type='image' src="{% static 'images/CZgate.png' %}" alt="CZgate" id="CZ" height=135>
+                            <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <input type='image' src="{% static 'images/Hgate.png' %}" alt="Hadamard" id="H"> 
+                                <input type='image' src="{% static 'images/HXgate.png' %}" alt="HXgate" id="HX">
+                                <input type='image' src="{% static 'images/CXgate.png' %}" alt="CXgate" id="CX">
+                                <input type='image' src="{% static 'images/CZgate.png' %}" alt="CZgate" id="CZ" height=135>
+                            </div>
                         <div>
                 </div>
         </div>
         <table border='1' width=500 height=500>
             <tr>
-                <td>
+                <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                 <td>
                     <!-- <div class="box"> -->
                     <form id='1qubit'> 
                         <h3 class=bold ><p>qubit1</p></h3><br> 
@@ -50,12 +51,12 @@
                             <option value="m">-</option>
                         </select>
                     </form><br>
-                        <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data">
+                        <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data" id='apply'>
                             {% csrf_token%}
-                        <button type="submit" id="apply" class="btn">apply</button> -->
-                        <!-- </form> -->
-                <!-- </div> -->
-                </th>
+                        <button type="submit" id="apply" class='btn' width=100 height=20>apply</button>
+                        </form>
+                </td>
+                </div>
                 <td align="center">
                     <form id='2qubit'>
                         <h3>qubit2</h3><br>
@@ -66,9 +67,9 @@
                                 <option value="m">-</option>
                             </select>
                         </form><br>
-                            <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data">
-                                {% csrf_token%}
-                            <button type="submit" id="apply" class="btn">apply</button> -->
+                            <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data" id='apply'>
+                                {% csrf_token%} -->
+                            <button type="submit" id="apply" class="btn" width=100 height=20>apply</button>
                 </th>
             </tr>
             <tr>
@@ -82,9 +83,9 @@
                                 <option value="m">-</option>
                             </select>
                         </form><br>
-                        <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data">
-                            {% csrf_token%}
-                        <button type="submit" id="apply" class="btn">apply</button> -->
+                        <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data" id='apply'>
+                            {% csrf_token%} -->
+                        <button type="submit" id="apply" class="btn" width=100 height=20>apply</button>
                     
                 </td>
                 <td align="center">
@@ -97,9 +98,9 @@
                                 <option value="m">-</option>
                             </select>
                     </form><br>
-                    <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data">
-                        {% csrf_token%}
-                    <button type="submit" id="apply" class="btn">apply</button> -->
+                    <!-- <form name="qubit" action="ajaxgate" method="POST" enctype="multipart/form-data" id='apply'>
+                        {% csrf_token%} -->
+                    <button type="submit" id="apply" class="btn">apply</button>
                 </td>
             </tr>
         </table>
@@ -109,55 +110,53 @@
                 <h4>Select Initial State and push Start!</h4>
         </span>
             <!-- <image src="{% static 'images/Measurement.png' %}"></image> -->
-        <form name="name_form" action="ajax" method="POST" enctype="multipart/form-data">
+        <form name="name_form" action="ajax" method="POST" enctype="multipart/form-data" id="circuit">
             {% csrf_token %}
-            <button type="submit" id="submit" class="btn"><a class="button1">Start</a></button>
+            <button type="submit" id="submit" class="start"><a class="button1">Start</a></button>
         </form>
         </div>
 
         <script type="text/javascript">
         var flag = true;
         document.getElementById("H").onclick = function() {
-            var ops = "H";
+            ops = "H";
             if(flag){
                 alert('Set the initial state!');
             }else{
             console.log(ops)
             
-            $("table").css({
+            $("tr").css({
                 "background-color": "pink",
                 "font-weight": "bold"
             });
+            
            }
         };
-        // document.getElementById("X").onclick = function() {
-        //     var ops = "X";
-        //     if(flag){
-        //         alert('Set the initial state!');
-        //     }else{
-        //     console.log(ops)
-        //     $("table").css({
-        //         "background-color": "pink",
-        //         "font-weight": "bold"
-        //     });
-        //    }
-        // };
-        // document.getElementById("Z").onclick = function() {
-        //     var ops = "Z";
-        //     if(flag){
-        //         alert('Set the initial state!');
-        //     }else{
-        //     console.log(ops)
-        //     $("table").css({
-        //         "background-color": "pink",
-        //         "font-weight": "bold"
-        //     });
-        //    }
-        // };
-
-        $("form").submit( function(event) {
+        $("#apply").submit( function(event) {
+            
             event.preventDefault();
             var form = $(this);
+            $.ajax({
+                url: form.prop("action"),
+                method:form.prop("method"),
+                data: {
+                    'qubit1': ops,
+                }, 
+                success: function(data, dataType){
+                console.log('Success', data);
+                },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+            }})
+            .done( function(data) {
+            $("#id_div_ajax_response").html('<img src="data:image/png;base64,' + data + '" height=500/>');
+            $("td").css("background-color", "white");
+            })
+        });
+
+        $("#circuit").submit( function(event) {
+            event.preventDefault();
+            var form = $(this);
+            console.log($(this));
             $.ajax({
                 url: form.prop("action"),
                 method:form.prop("method"),
@@ -176,12 +175,26 @@
             $("#id_div_ajax_response").html('<img src="data:image/png;base64,' + data + '" height=500/>');
             flag = false;
             $("select").css("display", "None");
-            $("button").css("display", "None");
+            $("#submit").css("display", "None");
             $("table").css("float", "left");
             $("#emp").css("display", "none");
             $("img").css("margin-top", "50px");
+            $("button").css("display", "inline-block")
             })
         });
+        function allowDrop(ev) {
+        ev.preventDefault();
+        }
+
+        function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        }
             </script>
     </body>
 </html>
