@@ -1,80 +1,115 @@
-.dragparts,
-.dragparts_drop {
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    overflow: hidden;
-    position: absolute;
-}
- 
- 
-/* #dragitemlist
---------------------------- */
-#dragitemlist {
-    margin-bottom: 50px;
-    width: 525px;
-    text-align: left;
-    position: relative;
-}
- 
-#dragitemlist ul.draglist {
-    margin-left: 5px;
-    width: 100%;
-}
- 
-#dragitemlist ul.draglist li {
-    margin: 0 5px 5px 0;
-    width: 100px;
-    height: 100px;
-    display: inline;
-    float: left;
-    position: relative;
-}
- 
- 
-/* #droparea
---------------------------- */
-#droparea {
-    padding: 5px 0 0 5px;
-    min-height: 100px;
-    background: #ddd;
-}
- 
-#droparea.areahover {
-    background: #666;
-}
- 
-#droparea .dragparts_drop {
+body {
     margin: 0;
-    padding: 0 5px 5px 0;
-    position: relative;
+    padding: 0;
+    text-align:center;
+    background-color:white;
 }
- 
- 
-/* #actionarea
---------------------------- */
-#actionarea {
-    padding: 10px 0;
+table{
+    float:left;
+    margin-left:300px;
+    margin-top:100px;
 }
- 
-#allselect,
-#listclear {
-    padding: 0 10px;
+img{
+    margin-top:100px;
+
 }
- 
- 
-/* =======================================
-    ClearFixElements
-======================================= */
-#dragitemlist ul:after {
-    content: ".";
-    height: 0;
-    clear: both;
-    display: block;
-    visibility: hidden;
+input{
+    padding:10px
 }
-#dragitemlist ul {
-    display: inline-block;
+
+
+#id_div_ajax_response{
+    text-align: center;
+}
+
+a.button1{
+    display:inline-block;
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#000000;
+    text-align:center;
+    transition: all 0.2s;
+}
+a.button1:hover{
+color:#000000;
+background-color:#F3C759;
+}
+@media all and (max-width:30em){
+ a.button1{
+    display:block;
+    margin:0.4em auto;
+ }
+}
+
+/* button{
+    text-align: center;
+    width:100px;
+    height:100px;
+} */
+h3.{
+
+}
+
+#apply{
+    display: none;
+}
+select {
+    width:80px;
+    height:40px;
+    font-size:20px;
+}
+span{
+    vertical-align: bottom;
+
+}
+
+.box {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.box select {
+background-color: #0563af;
+color: white;
+padding: 12px;
+width: 250px;
+border: none;
+font-size: 20px;
+box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+-webkit-appearance: button;
+appearance: button;
+outline: none;
+}
+
+.box::before {
+content: "\f13a";
+font-family: FontAwesome;
+position: absolute;
+top: 0;
+right: 0;
+width: 20%;
+height: 100%;
+text-align: center;
+font-size: 28px;
+line-height: 45px;
+color: rgba(255, 255, 255, 0.5);
+background-color: rgba(255, 255, 255, 0.1);
+pointer-events: none;
+}
+
+.box:hover::before {
+color: rgba(255, 255, 255, 0.6);
+background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+padding: 30px;
 }
