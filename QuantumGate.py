@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov 19 11:02:51 2019
+Created on Tue Nov 19 20:45:54 2019
 
 @author: User
 """
@@ -10,7 +10,21 @@ from qiskit.compiler import transpile
 import numpy as np
 import collections
 import random
+import matplotlib.pyplot as plt
+import os
 
+plt.ioff()
+
+'''
+    Function to create folder
+'''
+
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print ('Error: Creating directory. ' +  directory)
 '''
     Define class 
 '''
@@ -21,6 +35,11 @@ class QuantumOthello():
         self.num = num
         self.turn = turn
         self.qc = QuantumCircuit(num)
+        self.turnA = int(self.turn/2)
+        self.turnB = self.turn - self.turnA
+        self.GateA = self.RandomGate(self.turnA)
+        self.GateB = self.RandomGate(self.turnB)
+        self.MeasurementBasis = self.RandomBasis()
         
     def StartTheGame(self):
         for i in range(self.num):
@@ -58,6 +77,7 @@ class QuantumOthello():
         print(result)
         
     def get_cir(self, trans=False):
+        createFolder('./fig')
         style = { 'showindex': True, 
                  'cregbundle' : True, 'dpi' : 300}
         if trans == True:
@@ -66,29 +86,23 @@ class QuantumOthello():
     
     def initial(self, instruction, num, vector=None):
         
-#        ''' Instruction version '''
-#        if instruction == 'G': ## General
-#            self.qc.initialize(vector, [num])
-#        elif instruction == '+H':
-#            self.qc.initialize([1/np.sqrt(2), 1/np.sqrt(2)], [num])
-#        elif instruction == '-H':
-#            self.qc.initialize([1/np.sqrt(2), -1/np.sqrt(2)], [num])
-#        elif instruction == '1':
-#            self.qc.initialize([0, 1], [num])
-#        else:
-#            None
-        
         ''' Normal gate version '''
-        if instruction == '+H':
+        if instruction == '+':
             self.qc.h(num)
-        elif instruction == '-H':
+        elif instruction == '-':
             self.qc.x(num)
             self.qc.h(num)
         elif instruction == '1':
             self.qc.x(num)
-        else:
+        elif instruction == '0':
             None
+        else:
+            print('invalid initialize instruction')
     
+    def SeqInitial(self, instruction):
+        for i in range(self.num):
+            self.initial(instruction[i], i)
+        
     def end_initial(self):
         self.qc.barrier()        
     
@@ -96,16 +110,35 @@ class QuantumOthello():
         if type(num) == list and len(num) == 2:
             num_control = num[0]
             num_target = num[1]
+        if type(num) == list and len(num) == 1:
+            num = num[0]
         if oper == 'H':
             self.qc.h(num)
         if oper == 'CX':
             self.qc.cx(num_control, num_target)
         if oper == 'X':
             self.qc.x(num)
+        if oper == 'Z':
+            self.qc.z(num)
+        if oper == 'HX':
+            self.qc.h(num)
+            self.qc.x(num)
+        if oper == 'CZ':
+            self.qc.cz(num_control, num_target)
     
-    def RuntheGaame(self):
+    def RuntheGame(self):
+        self.qc.barrier()
+        
+        for i in range(self.num):
+            if self.MeasurementBasis[i] == 'X':
+                self.qc.h(i)
+            elif self.MeasurementBasis[i] == 'Y':
+                self.qc.sdg(i)
+                self.qc.h(i)
+            else:
+                None
         self.qc.measure_all()
-        self.get_cir()
+        self.get_cir().savefig('fig/Mreasurment.png')
         backend = Aer.get_backend('qasm_simulator') #qasm_simulator
         job = execute(self.qc, backend=backend, shots = 8192).result().get_counts()
         List = {'0': 0, '1': 0}
@@ -124,32 +157,27 @@ class QuantumOthello():
                 List[t] += job[i]
         return List
     
-    def RandomGate(self):
-        Gate = ['H', 'CX', 'X']
-        return random.choices(Gate, k=5)
+    def ReturnResult(self, result, error = 500):
+        
+        if abs(result['0'] - result['1']) < error:
+            return 'tie'
+        elif result['0'] > result['1']:
+            return '0'
+        else:
+            return '1'
     
-q = QuantumOthello(9, 5)
-choice = q.RandomGate()
-print(choice)
-choice = q.RandomGate()
-print(choice)
-#q.StartTheGame()
-#q.initial('0', 0)
-#q.initial('1', 1)
-#q.initial('0', 2)
-#q.initial('0', 3)
-#q.initial('1', 4)
-#q.initial('0', 5)
-#q.initial('1', 6)
-#q.initial('0', 7)
-#q.initial('1', 8)
-#q.end_initial()
-#
-#q.operation('H', 7)
-#q.operation('CX', [4, 1])
-#q.operation('CX', [7, 8])
-#q.operation('X', 6)
+    def RandomBasis(self):
+        Basis = ['X', 'Z']
+        return random.choices(Basis, k=self.num)
+    
+    def RandomGate(self, numTurn):
+        Gate = ['H', 'HX', 'CX', 'CZ']
+        return random.choices(Gate, k=numTurn)
+    
+    def RemoveOper(self, player, gate):
+        if player == 'A':
+            self.GateA.remove(gate)
+        else:
+            self.GateB.remove(gate)
+            
 
-#q.get_cir(trans=False)
-#result = q.RuntheGaame()
-#print(result)
